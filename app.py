@@ -29,7 +29,8 @@ with tabs[0]:
 
     st.write("Dataset shape:", df.shape)
     st.subheader("Descriptive stats")
-    st.write(df[["age","sex","trestbps","chol","thalach","y"]].describe())
+    st.write(df[["age", "sex", "trestbps", "chol", "thalach", "target"]].describe())
+
 
     st.subheader("Outcome prevalence")
     prevalence = df['y'].mean()
