@@ -36,24 +36,16 @@ if target_col is None:
 else:
     available_cols = [c for c in ["age","sex","trestbps","chol","thalach",target_col] if c in df.columns]
     st.write(df[available_cols].describe())
-
-    prevalence = df[target_col].mean()
+        prevalence = df[target_col].mean()
+    st.subheader("Outcome prevalence")
     st.metric(label="Outcome prevalence", value=f"{prevalence:.2%}")
+
+    st.subheader("Age distribution")
+    fig, ax = plt.subplots()
+    ax.hist(df['age'], bins=15)
+    st.pyplot(fig)
 
   
-
-
-    st.subheader("Outcome prevalence")
-    # Detect correct target column ('y' or 'target')
-target_col = "y" if "y" in df.columns else ("target" if "target" in df.columns else None)
-
-if target_col is None:
-    st.error("No target column found. Expected 'y' or 'target'. Please check your dataset.")
-else:
-    prevalence = df[target_col].mean()
-    st.metric(label="Outcome prevalence", value=f"{prevalence:.2%}")
-
-    st.metric("Outcome prevalence", f"{prevalence:.3f}")
 
     st.subheader("Age distribution")
     fig, ax = plt.subplots()
