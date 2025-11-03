@@ -1,0 +1,30 @@
+# Cohort inclusion/exclusion rules for UCI Cleveland Heart Disease dataset
+# Save in configs/cohort.yml
+
+data_source:
+  name: "UCI Heart Disease - Cleveland"
+  raw_url: "https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data"
+  description: "Cleveland subset from UCI Heart Disease repository (303 instances)."
+
+inclusion:
+  - "age >= 18"
+  - "non-missing outcome (num)"
+  - "usable chest pain and basic vitals (trestbps, chol, thalach not missing)"
+
+exclusion:
+  - "rows with missing values in model features (marked as '?') - drop rows"
+  - "duplicate patient rows (if any)"
+
+outcome:
+  variable: "num"
+  mapping:
+    0: 0   # no heart disease
+    1: 1   # heart disease presence (combine 1..4 -> 1)
+
+sensitive_attributes:
+  - sex   # (1 = male, 0 = female)
+  - age_bands: ["<40","40-59","60+"]
+
+notes: |
+  The `num` field (0..4) will be binarized: 0 -> 0; 1-4 -> 1.
+  Missing values in dataset are represented as '?' and will be dropped for simplicity for Week 1.
