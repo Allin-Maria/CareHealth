@@ -29,7 +29,18 @@ with tabs[0]:
 
     st.write("Dataset shape:", df.shape)
     st.subheader("Descriptive stats")
-    st.write(df[["age", "sex", "trestbps", "chol", "thalach", "target"]].describe())
+    target_col = "y" if "y" in df.columns else ("target" if "target" in df.columns else None)
+
+if target_col is None:
+    st.error("No target column found. Expected 'y' or 'target'. Please check your dataset.")
+else:
+    available_cols = [c for c in ["age","sex","trestbps","chol","thalach",target_col] if c in df.columns]
+    st.write(df[available_cols].describe())
+
+    prevalence = df[target_col].mean()
+    st.metric(label="Outcome prevalence", value=f"{prevalence:.2%}")
+
+  
 
 
     st.subheader("Outcome prevalence")
